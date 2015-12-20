@@ -1,0 +1,9 @@
+hooks:
+    build:
+        # sync-data
+        #- python /home/application/current/manage.py syncdb --noinput
+        - python /home/application/current/manage.py makemigrations
+        - python /home/application/current/manage.py migrate
+        # collectstatic
+        - python /home/application/current/manage.py collectstatic --noinput
+
