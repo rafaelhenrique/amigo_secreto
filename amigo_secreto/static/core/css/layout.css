@@ -1,0 +1,21 @@
+.ui-autocomplete
+{
+  max-width: 40% !important;
+}
+
+.ui-autocomplete li:hover
+{
+  cursor: pointer;
+  background-color: #337ab7; 
+}
+
+.ui-autocomplete li:hover a
+{
+  cursor: pointer;
+  color: white; 
+}
+
+input[type='checkbox']
+{
+  cursor: pointer;
+}

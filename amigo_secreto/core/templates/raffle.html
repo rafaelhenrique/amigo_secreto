@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+  
+  {% load staticfiles %}
+  {% load widget_tweaks %}
+
+  {% block js %}
+    <script type="text/javascript" src="{% static "core/js/core.js" %}"></script>
+  {% endblock %}
+  
+  {% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
+    <style type="text/css" src="{% static "core/css/layout.css" %}"></style>
+  {% endblock %}
+
+{% block content %}
+
+  <h2>Sortear amigo secreto</h2>
+
+  <form action="{% url 'raffle' %}" method="post" id="form">  
+    {% csrf_token %}
+
+    <div class="panel panel-default form">
+      <div class="panel-heading">Digite seu nome abaixo</div>
+      <div class="panel-body">
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+                <label for="form.partner.name">{{ form.participant_name.label }}</label>
+                {% render_field form.participant_name class="form-control" %}
+                {{ form.participant_name.errors }}
+            </div>
+          </div>         
+        </div>
+
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Sortear amigo</button>
+  </form>
+
+{% endblock %}
