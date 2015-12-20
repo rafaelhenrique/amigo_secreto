@@ -7,6 +7,14 @@ h2{
     color:#fff;
 }
 
+h1{
+    vertical-align: center;
+    text-align: center;
+    font-size: 60px;
+    font-weight: 600;
+    color: #ff0000;
+}
+
 .ident{
     display: block;
     margin-bottom:26px;
@@ -95,7 +103,6 @@ label{
     color: #fff;
     font-size: 60px;
     font-weight: 600;
-    font-style: "Comics Sans";
     line-height: 200px;
     text-align: center;
     vertical-align: center;

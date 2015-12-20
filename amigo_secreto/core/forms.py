@@ -1,11 +1,24 @@
 # -*- coding: utf-8 -*-
+from django.forms import ModelForm
+from django.forms import ModelChoiceField
 
-from django.forms import Form
-from django.forms import CharField
+from amigo_secreto.core.models import Member
 
 
-class RaffleForm(Form):
-    participant_name = CharField(
-        label=u'Seu nome é:',
+class ModelChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.name
+
+
+class RaffleForm(ModelForm):
+    name = ModelChoiceField(
+        label=u'Selecione seu nome:',
         required=True,
+        queryset=Member.objects.filter(raffled=False),
+        empty_label=u'--Selecione--',
+        to_field_name="name"
     )
+
+    class Meta:
+        model = Member
+        fields = ('name', )

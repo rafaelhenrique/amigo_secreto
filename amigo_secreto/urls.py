@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from amigo_secreto.core.views import Raffle
+from amigo_secreto.core.views import Raffle, List
 
 urlpatterns = [
     url(r'^$', Raffle.as_view(), name='raffle'),
+    url(r'^list/$', List.as_view()),
     url(r'^admin/', admin.site.urls),
 ]

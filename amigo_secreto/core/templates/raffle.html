@@ -26,16 +26,24 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-                <label for="form.partner.name">{{ form.participant_name.label }}</label>
-                {% render_field form.participant_name class="form-control" %}
-                {{ form.participant_name.errors }}
+                <label for="form.partner.name">{{ form.name.label }}</label>
+                {% render_field form.name class="form-control" %}
+                {{ form.name.errors }}
             </div>
-          </div>         
+          </div>
         </div>
 
       </div>
     </div>
     <button type="submit" class="btn btn-primary">Sortear amigo</button>
   </form>
+
+  {% if friend %}
+  <h1>
+    {{ participant.name }},</br>
+    Você tirou {{ friend.name }} como amigo secreto!!</br>
+    <img src="{% static "img/cat.jpg" %}"></img>
+  </h1>
+  {% endif %}
 
 {% endblock %}
