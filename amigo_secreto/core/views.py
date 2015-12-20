@@ -24,8 +24,12 @@ class Raffle(View):
     def post(self, request, *args, **kwargs):
         raffle_form = RaffleForm(request.POST)
         friend = None
+        participant = None
         if raffle_form.is_valid():
             participant = raffle_form.cleaned_data.get('name')
+            if participant.raffled:
+                render_to_response(self.template_name,
+                                   self.context, RequestContext(request))
             list_to_chose = Member.objects.filter(
                 chosen=False).exclude(name=participant.name)
             friend = random.choice(list_to_chose)
