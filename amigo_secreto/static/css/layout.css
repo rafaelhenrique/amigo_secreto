@@ -2,9 +2,17 @@ body{
     background: #000 url(../img/fireworks.gif) repeat-x 0 -52px;
 }
 
+h4{
+    color:#fff;
+}
 
 h2{
     color:#fff;
+}
+
+ol li {
+    color:#fff; 
+    font-size: 20px;
 }
 
 h1{
@@ -99,13 +107,22 @@ label{
     text-align: center;
 }
 
-.initial h2, .initial p, .initial small, .initial span{
+.initial h2, .initial p, .initial span{
     color: #fff;
     font-size: 60px;
     font-weight: 600;
     line-height: 200px;
     text-align: center;
     vertical-align: center;
+}
+
+.initial small{
+    color: #fff;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 200px;
+    text-align: center;
+    vertical-align: center;    
 }
 
 .row{

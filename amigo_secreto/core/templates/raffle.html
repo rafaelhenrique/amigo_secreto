@@ -15,12 +15,17 @@
 {% block content %}
 
   <h2>Sortear amigo secreto</h2>
-
+  <h4>Leia as instruções atentamente:</h4>
+  <ol>
+    <li>Escolha o seu nome abaixo somente o seu nome e nada mais além do seu nome! Se você escolher o nome de outra pessoa (que não seja o seu) você vai zicar o sistema e o sorteio precisará ser reiniciado!</li>
+    <li>Ao escolher seu nome clique no botão "Sortear amigo", em seguida será revelado seu amigo secreto nesta mesma tela, verifique antecipadamente se não tem nenhum olhudo do seu lado!</li>
+    <li>Após você sortear seu amigo secreto seu nome sumirá da lista e não será possível consultar uma segunda vez quem você tirou! Portanto anote o nome!</li>
+  </ol>
   <form action="{% url 'raffle' %}" method="post" id="form">  
     {% csrf_token %}
 
     <div class="panel panel-default form">
-      <div class="panel-heading">Digite seu nome abaixo</div>
+      <div class="panel-heading">Sortear amigo secreto</div>
       <div class="panel-body">
 
         <div class="row">
