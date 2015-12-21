@@ -4,7 +4,6 @@ import random
 from django.template.context import RequestContext
 from django.shortcuts import render_to_response
 from django.views.generic import View
-from django.http import JsonResponse
 
 from amigo_secreto.core.forms import RaffleForm
 from amigo_secreto.core.models import Member
@@ -15,7 +14,12 @@ class Raffle(View):
     context = {}
 
     def get(self, request, *args, **kwargs):
-        self.context['form'] = RaffleForm()
+        members = Member.objects.filter(chosen=False)
+        if members:
+            self.context['form'] = RaffleForm()
+        else:
+            self.context['form'] = None
+
         self.context['friend'] = None
         self.context['participant'] = None
         return render_to_response(self.template_name,
@@ -43,8 +47,3 @@ class Raffle(View):
         self.context['participant'] = participant
         return render_to_response(self.template_name,
                                   self.context, RequestContext(request))
-
-
-class List(View):
-    def get(self, request, *args, **kwargs):
-        return JsonResponse({'participants': Member.objects.all()})

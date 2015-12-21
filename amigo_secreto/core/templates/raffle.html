@@ -21,6 +21,7 @@
     <li>Ao escolher seu nome clique no botão "Sortear amigo", em seguida será revelado seu amigo secreto nesta mesma tela, verifique antecipadamente se não tem nenhum olhudo do seu lado!</li>
     <li>Após você sortear seu amigo secreto seu nome sumirá da lista e não será possível consultar uma segunda vez quem você tirou! Portanto anote o nome!</li>
   </ol>
+  {% if form %}
   <form action="{% url 'raffle' %}" method="post" id="form">  
     {% csrf_token %}
 
@@ -42,6 +43,13 @@
     </div>
     <button type="submit" class="btn btn-primary">Sortear amigo</button>
   </form>
+  {% else %}
+  <h1>
+    O amigo secreto deste ano já foi sorteado!</br>
+    Aguarde seu presente \o/</br>
+    <img src="{% static "img/cat.jpg" %}"></img>
+  </h1>
+  {% endif %}
 
   {% if friend %}
   <h1>
