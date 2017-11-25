@@ -31,5 +31,5 @@ class Participant(Model):
             self.name, self.chosen, self.raffled)
 
     class Meta:
-        verbose_name = "Participante do amigo secreto"
-        verbose_name_plural = "Participantes do amigo secreto"
+        verbose_name = "Participante"
+        verbose_name_plural = "Participantes"
