@@ -5,7 +5,7 @@ from django.db.models import CharField
 from django.db.models import BooleanField
 
 
-class Member(Model):
+class Participant(Model):
     name = CharField(
         primary_key=True,
         max_length=128,
@@ -27,5 +27,9 @@ class Member(Model):
     )
 
     def __repr__(self):
-        return "Member({!r}, {!r}, {!r})".format(
+        return "Participant({!r}, {!r}, {!r})".format(
             self.name, self.chosen, self.raffled)
+
+    class Meta:
+        verbose_name = "Participante do amigo secreto"
+        verbose_name_plural = "Participantes do amigo secreto"

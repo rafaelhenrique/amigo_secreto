@@ -7,7 +7,7 @@ from django.views.generic import View
 from django.utils import timezone
 
 from amigo_secreto.core.forms import RaffleForm
-from amigo_secreto.core.models import Member
+from amigo_secreto.core.models import Participant
 
 
 class Raffle(View):
@@ -15,7 +15,7 @@ class Raffle(View):
     context = {}
 
     def get(self, request, *args, **kwargs):
-        members = Member.objects.filter(chosen=False)
+        members = Participant.objects.filter(chosen=False)
         if members:
             self.context['form'] = RaffleForm()
         else:
@@ -36,7 +36,7 @@ class Raffle(View):
             if participant.raffled:
                 render_to_response(self.template_name,
                                    self.context, RequestContext(request))
-            list_to_chose = Member.objects.filter(
+            list_to_chose = Participant.objects.filter(
                 chosen=False).exclude(name=participant.name)
             friend = random.choice(list_to_chose)
             friend.chosen = True
