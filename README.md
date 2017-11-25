@@ -21,6 +21,30 @@ Instale os requisitos:
 pip install -r requirements.txt
 ```
 
+Copie o exemplo de configuração de .env:
+
+```
+cp contrib/env-sample .env
+```
+
+Gere sua SECRET_KEY:
+
+```
+python3.6 contrib/generate_secret_key.py
+```
+
+Adicione a sua SECRET_KEY gerada e mude o arquivo .env conforme suas preferências:
+
+```
+vim .env
+```
+
+Execute as migrações do projeto:
+
+```
+python manage.py migrate
+```
+
 Inicie o projeto:
 
 ```
