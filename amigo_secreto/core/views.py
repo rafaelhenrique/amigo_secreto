@@ -31,8 +31,6 @@ class Raffle(View):
         participant = None
         if raffle_form.is_valid():
             participant = raffle_form.cleaned_data.get('name')
-            if participant.raffled:
-                return render(request, self.template_name, self.context)
             list_to_chose = Participant.objects.filter(
                 chosen=False).exclude(name=participant.name)
             friend = random.choice(list_to_chose)

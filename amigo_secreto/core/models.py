@@ -27,7 +27,7 @@ class Participant(Model):
     )
 
     def __repr__(self):
-        return "Participant({!r}, {!r}, {!r})".format(
+        return "<Participant <name={!r}, chosen={!r}, raffled={!r}>>".format(
             self.name, self.chosen, self.raffled)
 
     class Meta:
