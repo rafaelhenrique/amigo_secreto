@@ -1,12 +1,11 @@
 {% extends "layout.html" %}
-  
   {% load staticfiles %}
   {% load widget_tweaks %}
 
   {% block js %}
     <script type="text/javascript" src="{% static "core/js/core.js" %}"></script>
   {% endblock %}
-  
+
   {% block css %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
     <style type="text/css" src="{% static "core/css/layout.css" %}"></style>
@@ -22,7 +21,7 @@
     <li>Após você sortear seu amigo secreto seu nome sumirá da lista e não será possível consultar uma segunda vez quem você tirou! Portanto anote o nome!</li>
   </ol>
   {% if form %}
-  <form action="{% url 'raffle' %}" method="post" id="form">  
+  <form action="{% url 'raffle' %}" method="post" id="form">
     {% csrf_token %}
 
     <div class="panel panel-default form">
