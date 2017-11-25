@@ -4,6 +4,7 @@ import random
 from django.template.context import RequestContext
 from django.shortcuts import render_to_response
 from django.views.generic import View
+from django.utils import timezone
 
 from amigo_secreto.core.forms import RaffleForm
 from amigo_secreto.core.models import Member
@@ -22,6 +23,7 @@ class Raffle(View):
 
         self.context['friend'] = None
         self.context['participant'] = None
+        self.context['year'] = timezone.now().year
         return render_to_response(self.template_name,
                                   self.context, RequestContext(request))
 
