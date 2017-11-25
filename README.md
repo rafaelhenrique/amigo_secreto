@@ -51,3 +51,21 @@ Inicie o projeto:
 python manage.py runserver
 ```
 
+# Como usar o sistema?
+
+Crie um superuser:
+
+```
+python manage.py createsuperuser
+```
+
+Com o sistema rodando (`python manage.py runserver`) acesse `http://127.0.0.1:8000/admin` informe seu usuário e senha criados anteriormente no login.
+
+Clique em `Participantes` e adicione os participantes do amigo secreto.
+
+É importante que não fiquem selecionadas as opções "Escolhido" e "Sorteou", pois isso invalidará o sorteio.
+
+Adicionados os participantes vá a tela inicial do sistema escolha seu nome e veja quem você sorteou. Feito isso os outros participantes também deverão escolher seus nomes e sortearem.
+
+IMPORTANTE: Neste sistema somente são suportadas quantidades PARES de participantes
+
