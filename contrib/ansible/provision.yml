@@ -1,0 +1,151 @@
+---
+# This playbook works fine on:
+#
+# - Ubuntu 16.04.1 x86_64
+# - Ubuntu 16.04.3 x86
+#
+# not tested in another versions
+
+- name: Provision amigo_secreto project
+  hosts: virtualbox
+  vars_files:
+    - secret/application/vars.yml
+  become: true
+
+  tasks:
+  - name: Create user.
+    user: name={{ project_user }} state=present
+
+  # - name: Check swap file.
+  #   command: file /swapfile
+  #   register: swapfile
+
+  # - name: Add swapfile with 1G.
+  #   command: fallocate -l 1G /swapfile
+  #   when: swapfile.stdout.find('swap file') == -1
+
+  # - name: Change permissions of swap.
+  #   command: chmod 600 /swapfile
+  #   when: swapfile.stdout.find('swap file') == -1
+
+  # - name: Create swap filesystem.
+  #   command: mkswap /swapfile
+  #   when: swapfile.stdout.find('swap file') == -1
+
+  # - name: Activate swap.
+  #   command: swapon /swapfile
+  #   when: swapfile.stdout.find('swap file') == -1
+
+  # - name: Add /swapfile to /etc/fstab.
+  #   lineinfile:
+  #     path: /etc/fstab
+  #     line: '/swapfile none swap sw 0 0'
+  #   when: swapfile.stdout.find('swap file') == -1
+
+  - name: Update system.
+    apt: update_cache=yes
+
+  # - name: Upgrade system.
+  #   apt: upgrade=dist
+
+  - name: Install required system packages.
+    apt: pkg={{ item }} state=installed update-cache=yes allow_unauthenticated=yes
+    with_items: "{{ system_packages }}"
+
+  - name: Create ssh directory to project_user.
+    file: path={{ project_home }}/.ssh state=directory mode=0700 owner={{ project_user }} group={{ project_user }}
+    become_user: "{{ project_user }}"
+
+  - name: Upload SSH key private to project_user.
+    copy: src={{ private_key_github }} dest={{ project_home }}/.ssh/id_rsa mode=0400 owner={{ project_user }} group={{ project_user }}
+
+  - name: Upload SSH key public to project_user.
+    copy: src={{ public_key_github }} dest={{ project_home }}/.ssh/id_rsa.pub mode=0644 owner={{ project_user }} group={{ project_user }}
+
+  - name: Pull sources from the repository.
+    git: repo={{ project_repo }} dest={{ project_root }} version=master accept_hostkey=True force=yes key_file={{ project_home }}/.ssh/id_rsa
+
+  - name: Create virtualenv
+    shell: /usr/bin/python3.5 -m venv {{ virtualenv_directory }}
+
+  - name: Upgrade PIP.
+    shell: "{{ virtualenv_directory }}/bin/pip install --upgrade pip"
+
+  - name: Install requirements of Python project.
+    pip: requirements={{ project_root }}/requirements.txt virtualenv={{ virtualenv_directory }}
+
+  - name: Create run to store socket files.
+    file: path={{ project_home }}/run state=directory
+
+  - name: Create logs to store logfiles.
+    file: path={{ project_home }}/logs state=directory
+
+  - name: Change permissions.
+    file: dest={{ project_home }} owner={{ project_user }} group={{ project_group }} recurse=yes
+
+  - name: Run collectstatic from manage.py.
+    django_manage:
+      command: "collectstatic"
+      app_path: "{{ project_root }}"
+      virtualenv: "{{ virtualenv_directory }}"
+    environment: "{{ production_variables }}"
+    become_user: "{{ project_user }}"
+
+  - name: Apply migration to Django default database.
+    django_manage:
+      command: "migrate"
+      app_path: "{{ project_root }}"
+      virtualenv: "{{ virtualenv_directory }}"
+    environment: "{{ production_variables }}"
+    become_user: "{{ project_user }}"
+
+  - name: Install supervisor gunicorn configuration file.
+    copy: src=secret/application/gunicorn.conf dest=/etc/supervisor/conf.d/{{ project_name }}_gunicorn.conf
+    notify: restart supervisor
+    tags:
+      - supervisor
+
+  - name: Remove files from sites-enabled of nginx.
+    file: path=/etc/nginx/sites-enabled/default state=absent
+    tags:
+      - nginx
+
+  - name: Upload nginx configuration file to sites-available.
+    copy: src={{ nginx_conf }} dest=/etc/nginx/sites-available/{{ project_name }}.conf
+    tags:
+      - nginx
+
+  - name: Create symlink file to sites-enabled.
+    file: src=/etc/nginx/sites-available/{{ project_name }}.conf dest=/etc/nginx/sites-enabled/01.{{ project_name }}.conf state=link
+    notify: restart nginx
+    tags:
+      - nginx
+
+  - name: Create supervisor start scripts.
+    shell: update-rc.d supervisor defaults
+
+  - name: Enable supervisor on start.
+    shell: update-rc.d supervisor enable
+
+  - name: Reboot instance.
+    shell: sleep 5 && logger "Reboot triggered by Ansible script" && shutdown -r now "Reboot triggered by Ansible script"
+    async: 1
+    poll: 0
+    become: true
+    tags:
+      - reboot
+
+  - name: Wait for instance reboot.
+    local_action:
+      module: wait_for
+        host={{ ansible_ssh_host }}
+        port={{ ansible_port }}
+        delay=15
+        timeout=120
+        state=started
+    become: false
+    tags:
+      - reboot
+
+  handlers:
+    - include: handlers.yml
