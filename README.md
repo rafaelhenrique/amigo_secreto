@@ -5,6 +5,12 @@ IMPORTANTE: Estamos usando Python 3.6 neste projeto
 
 # Como instalar?
 
+Antes, verifique se você tem esses pacotes instalados:
+
+```
+sudo apt-get install build-essential python3-dev python3-venv python3-pip
+```
+
 Crie um virtualenv:
 
 ```
