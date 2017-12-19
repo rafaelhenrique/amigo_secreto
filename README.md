@@ -77,3 +77,12 @@ Adicionados os participantes vá a tela inicial do sistema escolha seu nome e ve
 
 IMPORTANTE: Neste sistema somente são suportadas quantidades PARES de participantes
 
+# Possíveis problemas
+
+## wheel
+
+Existem sistemas onde o virtualenv não colocará o pacote wheel por padrão. Nestes casos quando for instalar os requisitos de com o pip você não conseguirá compilar algumas dependências necessárias. Caso isso aconteça instale primeiramente o pacote wheel:
+
+```
+pip install wheel
+```
