@@ -26,15 +26,15 @@ ssh-copy-id -i ~/.ssh/fs2w fs2w@<ip do host>
 - Adicione o conteúdo copiado em /home/fs2w/.ssh/authorized_keys
 - Teste o acesso por chave
 
-# Rodar playbook Ansible
-
-```
-ansible-playbook <playbook> -v
-```
-
 # Comandos para instalar pré-requisitos
 
 ```
 ansible virtualbox -i secret/hosts -m raw -a 'apt-get update' -b
 ansible virtualbox -i secret/hosts -m raw -a 'apt-get install -y python' -b
+```
+
+# Rodar playbook Ansible
+
+```
+ansible-playbook <playbook> -v
 ```
