@@ -1,5 +1,6 @@
 # virtualenv
 .amigo_secreto
+.venv
 
 # Python decouple
 .env
