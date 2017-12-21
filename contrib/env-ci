@@ -1,0 +1,12 @@
+# Se for um ambiente de produção setar sempre False
+# https://docs.djangoproject.com/en/1.11/ref/settings/#debug
+DEBUG=False
+
+# Coloque aqui uma secret key segura
+# https://docs.djangoproject.com/en/1.11/ref/settings/#secret-key
+SECRET_KEY=change-me
+
+# Coloque aqui os "endereços" da aplicação
+# https://docs.djangoproject.com/en/1.11/ref/settings/#allowed-hosts
+ALLOWED_HOSTS="127.0.0.1, localhost"
+
