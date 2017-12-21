@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rafaelhenrique/amigo_secreto.svg?branch=master)](https://travis-ci.org/rafaelhenrique/amigo_secreto)
+
 # amigo_secreto
 Sistema para realizar sorteio de amigo secreto! o/
 
