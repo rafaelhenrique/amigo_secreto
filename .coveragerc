@@ -1,0 +1,13 @@
+[run]
+omit=
+    */migrations/*
+    */.venv/*
+    *settings.py*
+    *wsgi.py*
+    *urls.py*
+    *tests*
+    *manage.py*
+    *apps.py*
+    *admin.py
+    *__init__.py*
+    *.virtualenvs*
