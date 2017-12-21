@@ -75,8 +75,6 @@ Clique em `Participantes` e adicione os participantes do amigo secreto.
 
 Adicionados os participantes vá a tela inicial do sistema escolha seu nome e veja quem você sorteou. Feito isso os outros participantes também deverão escolher seus nomes e sortearem.
 
-IMPORTANTE: Neste sistema somente são suportadas quantidades PARES de participantes
-
 # Possíveis problemas
 
 ## wheel
