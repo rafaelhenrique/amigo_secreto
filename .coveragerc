@@ -11,3 +11,4 @@ omit=
     *admin.py
     *__init__.py*
     *.virtualenvs*
+    *virtualenv*
