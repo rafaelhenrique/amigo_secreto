@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-import random
-
 from django.shortcuts import render
 from django.views.generic import View
 from django.utils import timezone
 
 from amigo_secreto.core.forms import RaffleForm
 from amigo_secreto.core.models import Participant
+from amigo_secreto.core.use_cases import raffle_secret_friend
 
 
 class Raffle(View):
@@ -31,13 +30,7 @@ class Raffle(View):
         participant = None
         if raffle_form.is_valid():
             participant = raffle_form.cleaned_data.get('name')
-            list_to_chose = Participant.objects.filter(
-                chosen=False).exclude(name=participant.name)
-            friend = random.choice(list_to_chose)
-            friend.chosen = True
-            participant.raffled = True
-            friend.save()
-            participant.save()
+            friend = raffle_secret_friend(participant)
 
         self.context['form'] = raffle_form
         self.context['friend'] = friend

@@ -7,5 +7,5 @@ clean:
 
 test:
 	@coverage run manage.py test -v2
-	@coverage report -m --fail-under 50
+	@coverage report -m --fail-under 68
 
